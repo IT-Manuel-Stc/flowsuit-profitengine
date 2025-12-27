@@ -14,16 +14,21 @@ export default function CopyLinkButton({ link }: { link: string }) {
   }
 
   return (
-    <Button onClick={copyToClipboard} className="w-full" size="lg">
+    <Button
+      onClick={copyToClipboard}
+      size="lg"
+      className="w-full h-14 text-lg rounded-xl transition-all"
+      variant={copied ? 'outline' : 'default'}
+    >
       {copied ? (
         <>
-          <Check className="w-4 h-4 mr-2" />
-          Copied to Clipboard!
+          <Check className="w-5 h-5 mr-2 text-green-500" />
+          In Zwischenablage kopiert!
         </>
       ) : (
         <>
-          <Copy className="w-4 h-4 mr-2" />
-          Copy Link to Clipboard
+          <Copy className="w-5 h-5 mr-2" />
+          Link kopieren
         </>
       )}
     </Button>
