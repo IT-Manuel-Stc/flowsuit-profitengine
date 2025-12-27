@@ -45,16 +45,16 @@ export default async function DashboardPage() {
               </div>
             </div>
             <div className="flex flex-wrap gap-3">
-              <Button asChild className="bg-[#00D47E] hover:bg-[#00c070] text-[#025864] font-semibold rounded-xl px-6">
-                <Link href="/clients/new">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Kunde
+              <Button asChild className="bg-[#00D47E] hover:bg-[#00c070] text-[#025864] font-semibold rounded-xl px-5 h-11">
+                <Link href="/clients/new" className="flex items-center gap-1.5">
+                  <Plus className="w-4 h-4" />
+                  <span>Kunde</span>
                 </Link>
               </Button>
-              <Button asChild variant="outline" className="border-white/30 text-white hover:bg-white/10 rounded-xl px-6">
-                <Link href="/proposals/new">
-                  <FileText className="w-4 h-4 mr-2" />
-                  Angebot
+              <Button asChild className="bg-white/20 hover:bg-white/30 text-white font-semibold rounded-xl px-5 h-11 border border-white/30">
+                <Link href="/proposals/new" className="flex items-center gap-1.5">
+                  <FileText className="w-4 h-4" />
+                  <span>Angebot</span>
                 </Link>
               </Button>
             </div>
