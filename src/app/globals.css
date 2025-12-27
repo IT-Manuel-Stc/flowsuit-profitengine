@@ -2,6 +2,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* FlowSuit Brand Colors
+ * Primary: #025864 (Teal/Petrol)
+ * Accent: #00D47E (Mint Green)
+ * Background: Light gray-blue tones
+ */
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -41,75 +47,85 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  /* Brand Colors */
+  --color-brand-primary: #025864;
+  --color-brand-accent: #00D47E;
+  --color-brand-light: #E8EEF0;
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --radius: 0.75rem;
+  /* FlowSuit Brand - Light Mode */
+  --background: #E8EEF0;
+  --foreground: #025864;
+  --card: #ffffff;
+  --card-foreground: #025864;
+  --popover: #ffffff;
+  --popover-foreground: #025864;
+  --primary: #025864;
+  --primary-foreground: #ffffff;
+  --secondary: #E8EEF0;
+  --secondary-foreground: #025864;
+  --muted: #d0dce0;
+  --muted-foreground: #4a6d75;
+  --accent: #00D47E;
+  --accent-foreground: #025864;
+  --destructive: #dc2626;
+  --border: #c5d4d8;
+  --input: #c5d4d8;
+  --ring: #025864;
+  /* Chart Colors - Teal/Mint Palette */
+  --chart-1: #025864;
+  --chart-2: #00D47E;
+  --chart-3: #4a6d75;
+  --chart-4: #7dd3c0;
+  --chart-5: #a8d8c8;
+  /* Sidebar */
+  --sidebar: #025864;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #00D47E;
+  --sidebar-primary-foreground: #025864;
+  --sidebar-accent: #034956;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #034956;
+  --sidebar-ring: #00D47E;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* FlowSuit Brand - Dark Mode */
+  --background: #0a1c1f;
+  --foreground: #E8EEF0;
+  --card: #0f2a2e;
+  --card-foreground: #E8EEF0;
+  --popover: #0f2a2e;
+  --popover-foreground: #E8EEF0;
+  --primary: #00D47E;
+  --primary-foreground: #025864;
+  --secondary: #1a3a40;
+  --secondary-foreground: #E8EEF0;
+  --muted: #1a3a40;
+  --muted-foreground: #8fb3bc;
+  --accent: #025864;
+  --accent-foreground: #E8EEF0;
+  --destructive: #ef4444;
+  --border: #1a3a40;
+  --input: #1a3a40;
+  --ring: #00D47E;
+  /* Chart Colors Dark */
+  --chart-1: #00D47E;
+  --chart-2: #4eeaab;
+  --chart-3: #8fb3bc;
+  --chart-4: #025864;
+  --chart-5: #7dd3c0;
+  /* Sidebar Dark */
+  --sidebar: #0f2a2e;
+  --sidebar-foreground: #E8EEF0;
+  --sidebar-primary: #00D47E;
+  --sidebar-primary-foreground: #025864;
+  --sidebar-accent: #1a3a40;
+  --sidebar-accent-foreground: #E8EEF0;
+  --sidebar-border: #1a3a40;
+  --sidebar-ring: #00D47E;
 }
 
 @layer base {
@@ -118,5 +134,10 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
   }
 }
