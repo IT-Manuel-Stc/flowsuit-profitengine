@@ -19,13 +19,13 @@ export default async function ClientsPage() {
     <div className="container max-w-6xl py-10">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold">Clients</h1>
-          <p className="text-muted-foreground mt-2">Manage your client relationships</p>
+          <h1 className="text-3xl font-bold">Kunden</h1>
+          <p className="text-muted-foreground mt-2">Verwalte deine Kundenbeziehungen</p>
         </div>
         <Button asChild>
           <Link href="/clients/new">
             <Plus className="w-4 h-4 mr-2" />
-            New Client
+            Neuer Kunde
           </Link>
         </Button>
       </div>
@@ -34,14 +34,14 @@ export default async function ClientsPage() {
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-16">
             <Building2 className="w-16 h-16 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No clients yet</h3>
+            <h3 className="text-lg font-semibold mb-2">Noch keine Kunden</h3>
             <p className="text-muted-foreground text-center mb-6">
-              Get started by adding your first client
+              Leg deinen ersten Kunden an
             </p>
             <Button asChild>
               <Link href="/clients/new">
                 <Plus className="w-4 h-4 mr-2" />
-                Add Client
+                Kunde hinzufügen
               </Link>
             </Button>
           </CardContent>

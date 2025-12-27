@@ -13,8 +13,8 @@ import { useState } from 'react'
 import Link from 'next/link'
 
 const clientFormSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  email: z.string().email('Invalid email address'),
+  name: z.string().min(1, 'Name ist erforderlich'),
+  email: z.string().email('Ungültige E-Mail-Adresse'),
   phone: z.string().optional(),
   company: z.string().optional(),
   address: z.string().optional(),
@@ -50,32 +50,32 @@ export default function NewClientPage() {
   return (
     <div className="container max-w-2xl py-10">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Add New Client</h1>
-        <p className="text-muted-foreground mt-2">Create a new client profile</p>
+        <h1 className="text-3xl font-bold">Neuen Kunden anlegen</h1>
+        <p className="text-muted-foreground mt-2">Erstelle ein neues Kundenprofil</p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <Card>
           <CardHeader>
-            <CardTitle>Client Information</CardTitle>
-            <CardDescription>Enter the client's contact and company details</CardDescription>
+            <CardTitle>Kundeninformationen</CardTitle>
+            <CardDescription>Gib die Kontakt- und Firmendaten des Kunden ein</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Name */}
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="name">Name *</Label>
-                <Input id="name" placeholder="John Doe" {...register('name')} />
+                <Input id="name" placeholder="Max Mustermann" {...register('name')} />
                 {errors.name && <p className="text-sm text-red-500">{errors.name.message}</p>}
               </div>
 
               {/* Email */}
               <div className="space-y-2">
-                <Label htmlFor="email">Email *</Label>
+                <Label htmlFor="email">E-Mail *</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="john@example.com"
+                  placeholder="max@beispiel.de"
                   {...register('email')}
                 />
                 {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
@@ -85,32 +85,32 @@ export default function NewClientPage() {
             {/* Phone & Company */}
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="phone">Phone</Label>
+                <Label htmlFor="phone">Telefon</Label>
                 <Input id="phone" type="tel" placeholder="+49 123 456789" {...register('phone')} />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="company">Company</Label>
-                <Input id="company" placeholder="Acme Inc." {...register('company')} />
+                <Label htmlFor="company">Firma</Label>
+                <Input id="company" placeholder="Beispiel GmbH" {...register('company')} />
               </div>
             </div>
 
             {/* Address */}
             <div className="space-y-2">
-              <Label htmlFor="address">Address</Label>
+              <Label htmlFor="address">Adresse</Label>
               <Input
                 id="address"
-                placeholder="123 Main St, City, Country"
+                placeholder="Musterstraße 123, 12345 Musterstadt"
                 {...register('address')}
               />
             </div>
 
             {/* Notes */}
             <div className="space-y-2">
-              <Label htmlFor="notes">Notes</Label>
+              <Label htmlFor="notes">Notizen</Label>
               <Textarea
                 id="notes"
-                placeholder="Any additional information about the client..."
+                placeholder="Weitere Informationen zum Kunden..."
                 rows={4}
                 {...register('notes')}
               />
@@ -118,10 +118,10 @@ export default function NewClientPage() {
 
             <div className="flex gap-4">
               <Button type="submit" className="flex-1" disabled={isLoading}>
-                {isLoading ? 'Creating Client...' : 'Create Client'}
+                {isLoading ? 'Kunde wird erstellt...' : 'Kunde erstellen'}
               </Button>
               <Button type="button" variant="outline" asChild>
-                <Link href="/clients">Cancel</Link>
+                <Link href="/clients">Abbrechen</Link>
               </Button>
             </div>
           </CardContent>

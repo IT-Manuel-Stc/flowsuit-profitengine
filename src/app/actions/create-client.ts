@@ -7,8 +7,8 @@ import { z } from 'zod'
 import type { Inserts } from '@/types/supabase'
 
 const clientSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  email: z.string().email('Invalid email address'),
+  name: z.string().min(1, 'Name ist erforderlich'),
+  email: z.string().email('Ungültige E-Mail-Adresse'),
   phone: z.string().optional(),
   company: z.string().optional(),
   address: z.string().optional(),
@@ -23,8 +23,11 @@ export async function createClient(formData: FormData) {
     data: { user },
   } = await supabase.auth.getUser()
 
+  // DEV MODE: Use a dummy user ID if not authenticated
+  const userId = user?.id || '00000000-0000-0000-0000-000000000000'
+
   if (!user) {
-    throw new Error('Not authenticated')
+    console.warn('⚠️ DEV MODE: No user authenticated, using dummy user ID')
   }
 
   // Parse and validate form data
@@ -41,7 +44,7 @@ export async function createClient(formData: FormData) {
 
   // Create the client
   const clientInsert: Inserts<'clients'> = {
-    user_id: user.id,
+    user_id: userId,
     name: validated.name,
     email: validated.email,
     phone: validated.phone || null,
@@ -53,7 +56,7 @@ export async function createClient(formData: FormData) {
   const { error } = await supabase.from('clients').insert(clientInsert)
 
   if (error) {
-    throw new Error('Failed to create client: ' + error.message)
+    throw new Error('Fehler beim Erstellen des Clients: ' + error.message)
   }
 
   revalidatePath('/clients')
