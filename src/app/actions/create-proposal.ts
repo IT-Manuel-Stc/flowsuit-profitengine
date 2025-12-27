@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
+import type { Inserts } from '@/types/supabase'
 
 const proposalSchema = z.object({
   clientId: z.string().min(1, 'Client is required'),
@@ -39,7 +40,7 @@ function calculateMilestones(totalBudget: number, paymentTerm: PaymentTerm, star
       title: 'Completion (50%)',
       amount: half,
       description: '50% upon project completion',
-      due_date: null, // To be set upon completion
+      due_date: null,
     })
   } else if (paymentTerm === 'upfront') {
     milestones.push({
@@ -51,7 +52,7 @@ function calculateMilestones(totalBudget: number, paymentTerm: PaymentTerm, star
   } else if (paymentTerm === 'milestones') {
     const firstThird = totalBudget * 0.33
     const secondThird = totalBudget * 0.33
-    const finalThird = totalBudget * 0.34 // Extra cent goes to final
+    const finalThird = totalBudget * 0.34
 
     milestones.push({
       title: 'Start (33%)',
@@ -103,16 +104,18 @@ export async function createProposal(formData: FormData) {
   const magicToken = generateMagicToken()
 
   // 1. Create the proposal
+  const proposalInsert: Inserts<'proposals'> = {
+    user_id: user.id,
+    client_id: validated.clientId,
+    title: validated.title,
+    total_amount: validated.totalBudget,
+    status: 'draft',
+    magic_link_token: magicToken,
+  }
+
   const { data: proposal, error: proposalError } = await supabase
     .from('proposals')
-    .insert({
-      user_id: user.id,
-      client_id: validated.clientId,
-      title: validated.title,
-      total_amount: validated.totalBudget,
-      status: 'draft',
-      magic_link_token: magicToken,
-    })
+    .insert(proposalInsert)
     .select()
     .single()
 
@@ -121,17 +124,19 @@ export async function createProposal(formData: FormData) {
   }
 
   // 2. Create the project (linked to proposal)
+  const projectInsert: Inserts<'projects'> = {
+    user_id: user.id,
+    client_id: validated.clientId,
+    proposal_id: proposal.id,
+    name: validated.title,
+    budget: validated.totalBudget,
+    status: 'active',
+    start_date: validated.startDate,
+  }
+
   const { data: project, error: projectError } = await supabase
     .from('projects')
-    .insert({
-      user_id: user.id,
-      client_id: validated.clientId,
-      proposal_id: proposal.id,
-      name: validated.title,
-      budget: validated.totalBudget,
-      status: 'active',
-      start_date: validated.startDate,
-    })
+    .insert(projectInsert)
     .select()
     .single()
 
@@ -146,13 +151,13 @@ export async function createProposal(formData: FormData) {
     validated.startDate
   )
 
-  const milestonesToInsert = milestones.map((m) => ({
+  const milestonesToInsert: Inserts<'payment_milestones'>[] = milestones.map((m) => ({
     project_id: project.id,
     title: m.title,
     amount: m.amount,
     description: m.description,
     due_date: m.due_date,
-    status: 'pending' as const,
+    status: 'pending',
   }))
 
   const { error: milestonesError } = await supabase
@@ -166,3 +171,4 @@ export async function createProposal(formData: FormData) {
   revalidatePath('/proposals')
   redirect(`/proposals/${proposal.id}/success`)
 }
+

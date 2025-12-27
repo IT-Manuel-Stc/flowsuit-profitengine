@@ -2,8 +2,13 @@ import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { CheckCircle2, Copy } from 'lucide-react'
+import { CheckCircle2 } from 'lucide-react'
 import CopyLinkButton from './copy-link-button'
+import type { Proposal, Client } from '@/types/supabase'
+
+type ProposalWithClient = Proposal & {
+  clients: Client | null
+}
 
 export default async function ProposalSuccessPage({
   params,
@@ -15,7 +20,7 @@ export default async function ProposalSuccessPage({
 
   const { data: proposal } = await supabase
     .from('proposals')
-    .select('*, clients(name)')
+    .select('*, clients(*)')
     .eq('id', id)
     .single()
 
@@ -23,9 +28,13 @@ export default async function ProposalSuccessPage({
     notFound()
   }
 
-  const magicLink = proposal.magic_link_token
-    ? `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/p/${proposal.magic_link_token}`
+  const typedProposal = proposal as unknown as ProposalWithClient
+
+  const magicLink = typedProposal.magic_link_token
+    ? `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/p/${typedProposal.magic_link_token}`
     : null
+
+  const clientName = typedProposal.clients?.name || 'the client'
 
   return (
     <div className="container max-w-2xl py-16">
@@ -41,13 +50,8 @@ export default async function ProposalSuccessPage({
         <div>
           <h1 className="text-3xl font-bold">Proposal Created!</h1>
           <p className="text-muted-foreground mt-2">
-            Your proposal for{' '}
-            <span className="font-semibold">
-              {proposal.clients && typeof proposal.clients === 'object' && 'name' in proposal.clients
-                ? proposal.clients.name
-                : 'the client'}
-            </span>{' '}
-            has been created successfully.
+            Your proposal for <span className="font-semibold">{clientName}</span> has been created
+            successfully.
           </p>
         </div>
 
@@ -79,9 +83,7 @@ export default async function ProposalSuccessPage({
               <div className="rounded-full bg-primary/10 p-1 mt-0.5">
                 <div className="w-2 h-2 rounded-full bg-primary" />
               </div>
-              <p className="text-sm">
-                Send the magic link to your client via email or messaging
-              </p>
+              <p className="text-sm">Send the magic link to your client via email or messaging</p>
             </div>
             <div className="flex items-start gap-3">
               <div className="rounded-full bg-primary/10 p-1 mt-0.5">
@@ -113,3 +115,4 @@ export default async function ProposalSuccessPage({
     </div>
   )
 }
+
