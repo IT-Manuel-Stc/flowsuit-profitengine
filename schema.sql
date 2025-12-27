@@ -1,11 +1,19 @@
--- FlowSuit Database Schema
+-- FlowSuit Database Schema - CLEAN INSTALL
+-- ⚠️ WARNING: This will DELETE all existing data!
 -- Run this in Supabase SQL Editor
+
+-- Drop existing tables (in reverse order of dependencies)
+DROP TABLE IF EXISTS time_logs CASCADE;
+DROP TABLE IF EXISTS payment_milestones CASCADE;
+DROP TABLE IF EXISTS projects CASCADE;
+DROP TABLE IF EXISTS proposals CASCADE;
+DROP TABLE IF EXISTS clients CASCADE;
 
 -- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- Clients table
-CREATE TABLE IF NOT EXISTS clients (
+CREATE TABLE clients (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   created_at TIMESTAMPTZ DEFAULT NOW(),
   user_id UUID NOT NULL,
@@ -18,7 +26,7 @@ CREATE TABLE IF NOT EXISTS clients (
 );
 
 -- Proposals table
-CREATE TABLE IF NOT EXISTS proposals (
+CREATE TABLE proposals (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   created_at TIMESTAMPTZ DEFAULT NOW(),
   user_id UUID NOT NULL,
@@ -34,7 +42,7 @@ CREATE TABLE IF NOT EXISTS proposals (
 );
 
 -- Projects table
-CREATE TABLE IF NOT EXISTS projects (
+CREATE TABLE projects (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   created_at TIMESTAMPTZ DEFAULT NOW(),
   user_id UUID NOT NULL,
@@ -49,7 +57,7 @@ CREATE TABLE IF NOT EXISTS projects (
 );
 
 -- Payment Milestones table
-CREATE TABLE IF NOT EXISTS payment_milestones (
+CREATE TABLE payment_milestones (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   created_at TIMESTAMPTZ DEFAULT NOW(),
   project_id UUID NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
@@ -62,7 +70,7 @@ CREATE TABLE IF NOT EXISTS payment_milestones (
 );
 
 -- Time Logs table
-CREATE TABLE IF NOT EXISTS time_logs (
+CREATE TABLE time_logs (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   created_at TIMESTAMPTZ DEFAULT NOW(),
   user_id UUID NOT NULL,
@@ -73,11 +81,17 @@ CREATE TABLE IF NOT EXISTS time_logs (
 );
 
 -- Create indexes for better query performance
-CREATE INDEX IF NOT EXISTS idx_clients_user_id ON clients(user_id);
-CREATE INDEX IF NOT EXISTS idx_proposals_user_id ON proposals(user_id);
-CREATE INDEX IF NOT EXISTS idx_proposals_client_id ON proposals(client_id);
-CREATE INDEX IF NOT EXISTS idx_projects_user_id ON projects(user_id);
-CREATE INDEX IF NOT EXISTS idx_projects_client_id ON projects(client_id);
-CREATE INDEX IF NOT EXISTS idx_payment_milestones_project_id ON payment_milestones(project_id);
-CREATE INDEX IF NOT EXISTS idx_time_logs_user_id ON time_logs(user_id);
-CREATE INDEX IF NOT EXISTS idx_time_logs_project_id ON time_logs(project_id);
+CREATE INDEX idx_clients_user_id ON clients(user_id);
+CREATE INDEX idx_proposals_user_id ON proposals(user_id);
+CREATE INDEX idx_proposals_client_id ON proposals(client_id);
+CREATE INDEX idx_projects_user_id ON projects(user_id);
+CREATE INDEX idx_projects_client_id ON projects(client_id);
+CREATE INDEX idx_payment_milestones_project_id ON payment_milestones(project_id);
+CREATE INDEX idx_time_logs_user_id ON time_logs(user_id);
+CREATE INDEX idx_time_logs_project_id ON time_logs(project_id);
+
+-- Success message
+DO $$
+BEGIN
+  RAISE NOTICE '✅ FlowSuit Database Schema erfolgreich erstellt!';
+END $$;
