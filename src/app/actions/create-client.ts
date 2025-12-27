@@ -1,6 +1,6 @@
 'use server'
 
-import { createClient } from '@/lib/supabase/server'
+import { createClient as createSupabaseClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
@@ -16,7 +16,7 @@ const clientSchema = z.object({
 })
 
 export async function createClient(formData: FormData) {
-  const supabase = await createClient()
+  const supabase = await createSupabaseClient()
 
   // Get current user
   const {
