@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 import { useState } from 'react'
 
 const navigation = [
-  { name: 'Startseite', href: '/', icon: Home },
+  { name: 'Dashboard', href: '/', icon: Home },
   { name: 'Kunden', href: '/clients', icon: Users },
   { name: 'Neues Angebot', href: '/proposals/new', icon: FileText },
 ]
