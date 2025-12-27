@@ -60,6 +60,7 @@ export interface Database {
           valid_until: string | null
           sent_at: string | null
           accepted_at: string | null
+          magic_link_token: string | null
         }
         Insert: {
           id?: string
@@ -73,6 +74,7 @@ export interface Database {
           valid_until?: string | null
           sent_at?: string | null
           accepted_at?: string | null
+          magic_link_token?: string | null
         }
         Update: {
           id?: string
@@ -86,6 +88,7 @@ export interface Database {
           valid_until?: string | null
           sent_at?: string | null
           accepted_at?: string | null
+          magic_link_token?: string | null
         }
       }
       projects: {
