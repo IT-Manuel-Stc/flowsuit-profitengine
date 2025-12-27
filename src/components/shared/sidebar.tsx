@@ -22,7 +22,7 @@ const generalNavigation = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
   { name: 'Kunden', href: '/clients', icon: Users },
   { name: 'Angebote', href: '/proposals/new', icon: FileText },
-  { name: 'Projekte', href: '/projects', icon: FolderKanban },
+  { name: 'Rechnungen', href: '/invoices', icon: FolderKanban },
 ]
 
 const supportNavigation = [
